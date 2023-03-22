@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.biz.dao.TeacherDao">
+    <select id="getTeachers" resultType="io.renren.modules.biz.entity.TeacherVO">
+        select * from sys_teacher where 1=1
+        <if test="id !=null">
+            and id=#{value}
+        </if>
+    </select>
+
+    <insert id="addTeacher" useGeneratedKeys="true" keyProperty="id">
+        insert into `renren_security`.`sys_teacher`
+        ( `name`, `icon`, `subject`, `gender`, `email`, `mobile`, `content`, `skill_level`, `service_level`) VALUES
+        ( #{name}, #{icon}, #{subject}, #{gender}, #{email}, #{mobile}, #{content}, #{skillLevel}, #{serviceLevel});
+    </insert>
+
+    <update id="updateTeacherById">
+        update sys_teacher
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="icon!=null">
+                icon=#{icon},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="mobile!=null">
+                mobile=#{mobile},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="skill_level!=null">
+                skill_level=#{skillLevel},
+            </if>
+            <if test="service_level!=null">
+                service_level=#{serviceLevel},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <select id="getTeacherStatusById" resultType="integer">
+        select sys_teacher where id=#{value}
+    </select>
+</mapper>
